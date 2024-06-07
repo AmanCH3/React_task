@@ -29,7 +29,8 @@ function App() {
                                 element: <Form/>
                             },
                             {path:'/ground',element:<Ground/>},
-                            {path:'/ground/form',element:<Form/>}
+                            {path:'/ground/form',element:<Form/>},
+                            {path:'/ground/form/:id',element:<Form/>},
 
                         ]
                     )

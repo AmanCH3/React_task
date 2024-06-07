@@ -1,12 +1,33 @@
 import {useForm} from "react-hook-form";
 import axios from "axios";
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
+import {useNavigate, useParams} from "react-router-dom";
 
 function Form() {
+
+    const navigate=useNavigate();
+
+
+    const {id}=useParams()
+
+    console.log(id);
+
+    const getById= useQuery({
+        queryKey:["GET_GROUND_BY_ID"],
+        queryFn(){
+            return axios.get("http://localhost:8080/ground/"+id)
+        }
+    })
+
+    console.log(getById?.data?.data)
+
     const {
         register, handleSubmit,
         formState
-    } = useForm();
+    } = useForm({
+        values:{...getById?.data?.data,groundName:getById?.data?.data.ground_name},
+        mode:"all"
+    });
 
 
     const {errors} = formState;
@@ -16,6 +37,9 @@ function Form() {
     const apiCall = useMutation({
         mutationKey: ["SAVE_GROUND_DATA"],
         mutationFn(requestData: any) {
+            if(requestData?.id){
+                return axios.put("http://localhost:8080/ground", requestData)
+            }
             return axios.post("http://localhost:8080/ground", requestData)
         }
     })
@@ -25,12 +49,13 @@ function Form() {
         apiCall.mutate(values,{
             onSuccess(res){
                 alert(res?.data?.message)
+                navigate("/ground")
             }
         })
     }
 
     return (<>
-        <form onClick={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <div>
                 <label>Ground Name</label>
                 <input type="text" {...register("groundName", {
@@ -41,7 +66,8 @@ function Form() {
 
             </div>
             <div>
-                <input type="submit"/>
+                <button type="submit">Save </button>
+                <button type="button" onClick={()=>navigate("/ground")}>Back</button>
             </div>
         </form>
     </>)
