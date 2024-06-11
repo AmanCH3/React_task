@@ -4,7 +4,7 @@ import {useMutation} from "@tanstack/react-query";
 import axios from "axios";
 
 
-function Form() {
+function UserForm() {
 
     const navigate = useNavigate();
 
@@ -45,4 +45,4 @@ function Form() {
     )
 }
 
-export default Form;
+export default UserForm;

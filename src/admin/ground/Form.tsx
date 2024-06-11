@@ -3,7 +3,7 @@ import axios from "axios";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {useNavigate, useParams} from "react-router-dom";
 
-function Form() {
+function GroundForm() {
 
     const navigate=useNavigate();
 
@@ -73,4 +73,4 @@ function Form() {
     </>)
 }
 
-export default Form;
+export default GroundForm;
