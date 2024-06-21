@@ -1,9 +1,5 @@
-function Register(){
-
-    return (<>
-        Register page....
-    </>)
+function Register() {
+  return <>Register page....</>;
 }
-
 
 export default Register;
